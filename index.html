@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>WebGPU Template</title>
+	<link rel="icon" type="image/x-icon" href="resources/favicon.ico">
+	<style>
+		/* Remove default margins and padding */
+		body, html
+		{
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		/* Removes extra space below the canvas */
+		canvas
+		{
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script src="main.js"></script>
+	<script>
+		// Set canvas size on load
+		window.onload = () =>
+		{
+			const canvas = document.getElementById('canvas');
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+
+			// Set a listener to update canvas size on window resize
+			window.addEventListener('resize', () =>
+			{
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
+			});
+		};
+	</script>
+</body>
+</html>
