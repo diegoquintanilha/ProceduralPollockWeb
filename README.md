@@ -6,7 +6,7 @@ The program creates an HTML canvas and a WebGPU context, then uses a 64-bit seed
 
 The generated images look like abstract expressionistic art, somewhat resembling to the style of Jackson Pollock, hence the name of the project.
 
-You can view the project's output directly on the GitHub Pages link <https://diegoquintanilha.github.io/ProceduralPollockWeb/index.html>. No need to build or download anything. Simply reload the page to generate a new shader.
+You can view the project's output directly on the GitHub Pages link <https://diegoquintanilha.github.io/ProceduralPollockWeb/>. No need to build or download anything. Simply reload the page to generate a new shader.
 
 This project uses a custom PRNG (see `src/RandFS.h`) to procedurally generate a function that receives as input the X and Y coordinates of each pixel, along with the time, and outputs an RGB value for that pixel. From the given seed, it uses different techniques to compose primitive mathematical formulas and generate a single function. This function is then incorporated into a WGSL fragment shader, compiled into WebAssembly and rendered on the browser window.
 
