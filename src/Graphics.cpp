@@ -32,6 +32,14 @@ void Graphics::Initialize(const char* shaderCode)
 	// Store shader code
 	m_ShaderCode = shaderCode;
 
+	// Check if the browser has WebGPU enabled
+	int wgpuSupported = emscripten_run_script_int("navigator.gpu ? 1 : 0");
+	if (!wgpuSupported)
+	{
+		emscripten_run_script("alert('WebGPU is not available in this browser.')");
+		return;
+	}
+
 	// This is the first function call in a sequence of async function calls to setup the WebGPU environment
 	GetInstance();
 }
@@ -39,14 +47,16 @@ void Graphics::GetInstance()
 {
 	// Get instance
 	m_Instance = wgpu::CreateInstance();
+
 	// Call the next async setup function
 	m_Instance.RequestAdapter(nullptr, GetAdapter, nullptr);
 }
 void Graphics::GetAdapter(WGPURequestAdapterStatus status, WGPUAdapter cAdapter, const char* message, void* userdata)
 {
+	// Check if the adapter request was successful(if it wasn't, most likely the browser does not support WebGPU)
 	if (status != WGPURequestAdapterStatus_Success)
 	{
-		std::cerr << "Could not get adapter" << std::endl;
+		emscripten_run_script("alert('WebGPU API is present but not supported (adapter unavailable).')");
 		return;
 	}
 
@@ -71,7 +81,7 @@ void Graphics::GetDevice(WGPURequestDeviceStatus status, WGPUDevice cDevice, con
 void Graphics::SetupPipeline()
 {
 	#pragma region Surface
-	
+
 	// Create the surface
 	wgpu::SurfaceDescriptorFromCanvasHTMLSelector canvasDescriptor{};
 	canvasDescriptor.selector = "#canvas";

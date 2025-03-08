@@ -1238,6 +1238,15 @@ async function createWasm() {
       return false;
     };
 
+  var _emscripten_run_script = (ptr) => {
+      eval(UTF8ToString(ptr));
+    };
+
+  /** @suppress{checkTypes} */
+  var _emscripten_run_script_int = (ptr) => {
+      return eval(UTF8ToString(ptr))|0;
+    };
+
   
   var handleException = (e) => {
       // Certain exception types we do not treat as errors since they are used for
@@ -5692,6 +5701,10 @@ var wasmImports = {
   emscripten_get_now: _emscripten_get_now,
   /** @export */
   emscripten_resize_heap: _emscripten_resize_heap,
+  /** @export */
+  emscripten_run_script: _emscripten_run_script,
+  /** @export */
+  emscripten_run_script_int: _emscripten_run_script_int,
   /** @export */
   emscripten_set_main_loop: _emscripten_set_main_loop,
   /** @export */
